@@ -1,5 +1,10 @@
+import { usersResolvers } from './users.js'
+
 export const resolvers = {
   Query: {
-    sayHi: () => "Hello World"
+    ...usersResolvers.Query
+  },
+  Mutation: {
+    ...usersResolvers.Mutation
   }
 }
