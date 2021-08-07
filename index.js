@@ -1,7 +1,6 @@
 import { ApolloServer } from 'apollo-server'
-import mongoose from 'mongoose'
 
-import { MONGODB } from './config.js'
+import db from './db/index.js'
 import { resolvers } from './graphql/resolvers/index.js'
 import typeDefs from './graphql/typeDefs.js'
 
@@ -13,8 +12,7 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req })
 })
 
-mongoose
-  .connect(MONGODB, { useNewUrlParser: true })
+db.connect()
   .then(() => {
     console.log('MongoDB Connected')
     return server.listen({ port: PORT })
