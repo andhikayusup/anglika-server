@@ -29,9 +29,11 @@
   "devDependencies": {
     "@babel/preset-env": "^7.14.9",
     "@shelf/jest-mongodb": "^2.0.1",
+    "@types/chai-as-promised": "^7.1.4",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.0.6",
     "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
     "eslint": "^7.32.0",
     "eslint-plugin-jest": "^24.4.0",
     "mocha": "^9.0.3",
