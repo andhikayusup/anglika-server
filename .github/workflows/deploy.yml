@@ -18,7 +18,6 @@ jobs:
         cache: 'npm'
 
     - run: npm ci
-    - run: npm install
     - run: npm test
       env:
         DB_URI: ${{ secrets.DB_URI }}
