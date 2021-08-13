@@ -2,7 +2,10 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { UserInputError } from 'apollo-server-errors'
 
-import { validateRegisterInput } from '../utils/validators.js'
+import {
+  validateRegisterInput,
+  validateLoginInput
+} from '../utils/validators.js'
 import { SECRET_KEY } from '../../config.js'
 import User from '../../db/models/User.js'
 import { checkAuth } from '../utils/check-auth.js'
@@ -76,6 +79,34 @@ export const usersResolvers = {
       return {
         ...res._doc,
         id: res._id,
+        token
+      }
+    },
+    async login(_, { loginInput: { username, password } }) {
+      const { errors, valid } = validateLoginInput(username, password)
+
+      if (!valid) {
+        throw new UserInputError('Errors', { errors })
+      }
+
+      const user = await User.findOne({ username })
+
+      if (!user) {
+        errors.general = 'User not found'
+        throw new UserInputError('User not found', { errors })
+      }
+
+      const match = await bcrypt.compare(password, user.password)
+      if (!match) {
+        errors.general = 'Wrong credentials'
+        throw new UserInputError('Wrong credentials', { errors })
+      }
+
+      const token = generateToken(user)
+
+      return {
+        ...user._doc,
+        id: user._id,
         token
       }
     }

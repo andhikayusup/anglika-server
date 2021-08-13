@@ -1,0 +1,24 @@
+name: Automated Test
+
+on:
+  push:
+    branches: "**"
+  pull_request:
+    branches: [ main, staging ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+        cache: 'npm'
+
+    - run: npm ci
+    - run: npm test
+      env:
+        DB_URI: ${{ secrets.DB_URI }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
