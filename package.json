@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "NODE_ENV=test mocha --recursive --exit"
   },
   "repository": {
     "type": "git",
@@ -21,10 +21,24 @@
   "homepage": "https://github.com/andhikayusup/anglika-server#readme",
   "dependencies": {
     "apollo-server": "^2.25.2",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
     "graphql": "^15.5.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.11"
+    "@babel/preset-env": "^7.14.9",
+    "@shelf/jest-mongodb": "^2.0.1",
+    "@types/chai-as-promised": "^7.1.4",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.0.6",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^24.4.0",
+    "mocha": "^9.0.3",
+    "nodemon": "^2.0.11",
+    "prettier": "^2.3.2"
   }
 }
