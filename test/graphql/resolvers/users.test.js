@@ -123,6 +123,58 @@ describe('usersResolvers', () => {
         )
         expect(res).to.have.property('token')
       })
+
+      describe('when user input invalid', async () => {
+        it('should throws UserInputError', async () => {
+          await usersResolvers.Mutation.register(
+            {},
+            { registerInput }
+          )
+
+          await expect(
+            usersResolvers.Mutation.login(
+              {},
+              { loginInput: { username: '', password: '' } }
+            )
+          ).to.be.rejectedWith(UserInputError)
+        })
+      })
+
+      describe('when user not found', async () => {
+        it('should throws UserInputError', async () => {
+          await usersResolvers.Mutation.register(
+            {},
+            { registerInput }
+          )
+
+          await expect(
+            usersResolvers.Mutation.login(
+              {},
+              {
+                loginInput: { username: 'dummy2', password: 'dummy' }
+              }
+            )
+          ).to.be.rejectedWith(UserInputError)
+        })
+      })
+
+      describe('when has incorrect password', async () => {
+        it('should throws UserInputError', async () => {
+          await usersResolvers.Mutation.register(
+            {},
+            { registerInput }
+          )
+
+          await expect(
+            usersResolvers.Mutation.login(
+              {},
+              {
+                loginInput: { username: 'dummy2', password: 'dummy' }
+              }
+            )
+          ).to.be.rejectedWith(UserInputError)
+        })
+      })
     })
   })
 })
